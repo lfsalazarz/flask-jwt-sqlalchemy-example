@@ -1,0 +1,10 @@
+Flask-RESTful
+Flask-JWT-Extended
+flask_cors
+python-dotenv
+cryptography
+pydantic
+Flask-SQLAlchemy
+flask-marshmallow
+marshmallow-sqlalchemy
+marshmallow

@@ -1,0 +1,11 @@
+
+openssl req -x509 -out localhost.crt -keyout localhost.key \
+ -newkey rsa:2048 -nodes -sha256 \
+ -subj '/CN=localhost'
+
+openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj "/CN=localhost"
+
+openssl x509 -pubkey -noout -in localhost.crt  > pubkey.pem
+
+openssl rand -base64 16
+openssl rand -hex 16

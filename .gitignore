@@ -1,0 +1,11 @@
+__pycache__
+resources/__pycache__
+schemas/__pycache__
+config/__pycache__
+certs/localhost.crt
+certs/localhost.key
+certs/pubkey.pem
+Lib
+Scripts
+include
+pyvenv.cfg
