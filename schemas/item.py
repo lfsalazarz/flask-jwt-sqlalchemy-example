@@ -10,3 +10,12 @@ class ItemSchema(ma.SQLAlchemyAutoSchema):
         load_only = ("store",)
         dump_only = ("id",)
         include_fk = True
+
+
+# from pydantic.dataclasses import dataclass
+
+# @dataclass
+# class ItemSchema:
+#     name: str
+#     price: float
+#     store_id: int

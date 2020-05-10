@@ -7,8 +7,9 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-from marshmallow import ValidationError
 from dotenv import load_dotenv
+from marshmallow import ValidationError
+# from werkzeug.exceptions import HTTPException
 from db import db
 from ma import ma
 from blacklist import BLACKLIST
@@ -18,13 +19,15 @@ from resources.user import UserRegister, UserLogin, User, UserLogout
 from resources.user import TokenRefresh
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
+
 # HTTP Status Codes
 from config.constants import UNAUTHORIZED, BAD_REQUEST
+
 
 load_dotenv(".env")
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 # https://flask-jwt-extended.readthedocs.io/en/latest/options.html
@@ -49,9 +52,24 @@ jwt = JWTManager(app)
 def create_tables():
     db.create_all()
 
+# https://flask.palletsprojects.com/en/1.1.x/errorhandling/#registering
 @app.errorhandler(ValidationError)
 def handle_marshmallow_validation(err):
     return jsonify(err.messages), BAD_REQUEST
+
+# @app.errorhandler(HTTPException)
+# def handle_exception(e):
+#     """Return JSON instead of HTML for HTTP errors."""
+#     # start with the correct headers and status code from the error
+#     response = e.get_response()
+#     # replace the body with JSON
+#     response.data = json.dumps({
+#         "code": e.code,
+#         "name": e.name,
+#         "description": e.description,
+#     })
+#     response.content_type = "application/json"
+#     return response
 
 @jwt.user_claims_loader
 def add_claims_to_jwt(identity):

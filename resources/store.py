@@ -11,6 +11,7 @@ store_list_schema = StoreSchema(many=True)
 
 class Store(Resource):
     @classmethod
+    @jwt_required
     def get(cls, name: str):
         store = StoreModel.find_by_name(name)
         if store:
@@ -19,6 +20,7 @@ class Store(Resource):
         return {"message": "store_not_found"}, NOT_FOUND
 
     @classmethod
+    @fresh_jwt_required
     def post(cls, name: str):
         if StoreModel.find_by_name(name):
             return {"message": "store_name_exists" + name}, BAD_REQUEST
@@ -32,6 +34,7 @@ class Store(Resource):
         return store_schema.dump(store), CREATED
 
     @classmethod
+    @fresh_jwt_required
     def delete(cls, name: str):
         store = StoreModel.find_by_name(name)
         if store:
@@ -43,5 +46,6 @@ class Store(Resource):
 
 class StoreList(Resource):
     @classmethod
+    @jwt_required
     def get(cls):
         return {"stores": store_list_schema.dump(StoreModel.find_all())}, OK
