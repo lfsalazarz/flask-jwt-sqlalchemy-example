@@ -7,6 +7,7 @@ certs/localhost.crt
 certs/localhost.key
 certs/pubkey.pem
 Lib
+lib
 Scripts
 include
 pyvenv.cfg

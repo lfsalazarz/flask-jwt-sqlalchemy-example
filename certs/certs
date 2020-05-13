@@ -1,11 +1,7 @@
-
-openssl req -x509 -out localhost.crt -keyout localhost.key \
- -newkey rsa:2048 -nodes -sha256 \
- -subj '/CN=localhost'
-
+# generate self signed certificate for develop
 openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj "/CN=localhost"
-
 openssl x509 -pubkey -noout -in localhost.crt  > pubkey.pem
 
+# generate APP_SECRET_KEY for develop
 openssl rand -base64 16
 openssl rand -hex 16
