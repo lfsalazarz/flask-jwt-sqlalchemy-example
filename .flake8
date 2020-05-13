@@ -14,4 +14,11 @@ exclude =
     requirements.txt,
     .pre-commit-config.yaml,
     venv,
-    tmp
+    tmp,
+    Lib,
+    Scripts,
+    include,
+    pyvenv.cfg,
+    bin,
+    data.db,
+    lib

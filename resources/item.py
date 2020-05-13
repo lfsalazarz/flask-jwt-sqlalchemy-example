@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask import request
 from flask_jwt_extended import jwt_required, fresh_jwt_required
+from sqlalchemy.exc import SQLAlchemyError
 from models.item import ItemModel
 from schemas.item import ItemSchema
 
@@ -33,7 +34,7 @@ class Item(Resource):
 
         try:
             item.save_to_db()
-        except:
+        except SQLAlchemyError:
             return {"message": "item_error_inserting"}, INTERNAL_SERVER_ERROR
 
         return item_schema.dump(item), CREATED

@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import request
+from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import (
     create_access_token,
@@ -33,18 +34,16 @@ class UserRegister(Resource):
         user_json = request.get_json()
         user = user_schema.load(user_json)
 
-        print(user)
-
         if UserModel.find_by_username(user.username):
-            return {"message": gettext("user_username_exists")}, BAD_REQUEST
+            return {"message": "user_username_exists"}, BAD_REQUEST
 
         if UserModel.find_by_email(user.email):
-            return {"message": gettext("user_email_exists")}, BAD_REQUEST
+            return {"message": "user_email_exists"}, BAD_REQUEST
 
         try:
             user.save_to_db()
             return {"message": "user_registered"}, CREATED
-        except:  # failed to save user to db
+        except SQLAlchemyError:  # failed to save user to db
             traceback.print_exc()
             user.delete_from_db()  # rollback
             return {"message": "user_error_creating"}, INTERNAL_SERVER_ERROR

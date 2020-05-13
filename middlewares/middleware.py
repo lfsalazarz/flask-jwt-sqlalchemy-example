@@ -1,4 +1,4 @@
-from werkzeug.wrappers import Request, Response, ResponseStream
+from werkzeug.wrappers import Request, Response
 from json import dumps
 
 

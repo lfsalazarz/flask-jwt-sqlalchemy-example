@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, fresh_jwt_required
+from sqlalchemy.exc import SQLAlchemyError
 from models.store import StoreModel
 from schemas.store import StoreSchema
 
@@ -30,7 +31,7 @@ class Store(Resource):
         store = StoreModel(name=name)
         try:
             store.save_to_db()
-        except:
+        except SQLAlchemyError:
             return {"message": "store_error_inserting"}, INTERNAL_SERVER_ERROR
 
         return store_schema.dump(store), CREATED
