@@ -28,7 +28,7 @@ from config.constants import UNAUTHORIZED, BAD_REQUEST
 load_dotenv(".env")
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGHT"] = 3 * 1024 * 1024
+app.config["MAX_CONTENT_LENGTH"] = 3 * 1024 * 1024
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "DATABASE_URL", "sqlite:///data.db"
 )
