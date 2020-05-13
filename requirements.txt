@@ -8,3 +8,5 @@ Flask-SQLAlchemy
 flask-marshmallow
 marshmallow-sqlalchemy
 marshmallow
+flake8
+black

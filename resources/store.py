@@ -1,6 +1,8 @@
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required, fresh_jwt_required
 from models.store import StoreModel
 from schemas.store import StoreSchema
+
 # HTTP Status Codes
 from config.constants import OK, CREATED, NOT_FOUND, BAD_REQUEST, INTERNAL_SERVER_ERROR
 

@@ -9,3 +9,4 @@ Lib
 Scripts
 include
 pyvenv.cfg
+bin/

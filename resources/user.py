@@ -13,8 +13,16 @@ import traceback
 from models.user import UserModel
 from schemas.user import UserSchema
 from blacklist import BLACKLIST
+
 # HTTP Status Codes
-from config.constants import OK, CREATED, NOT_FOUND, BAD_REQUEST, INTERNAL_SERVER_ERROR, UNAUTHORIZED
+from config.constants import (
+    OK,
+    CREATED,
+    NOT_FOUND,
+    BAD_REQUEST,
+    INTERNAL_SERVER_ERROR,
+    UNAUTHORIZED,
+)
 
 user_schema = UserSchema()
 
