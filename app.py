@@ -14,6 +14,7 @@ from marshmallow import ValidationError
 from db import db
 from ma import ma
 from blacklist import BLACKLIST
+from middlewares.middleware import MaxContentLength
 
 # Resources imports
 from resources.user import UserRegister, UserLogin, User, UserLogout
@@ -44,6 +45,7 @@ api = Api(app)
 # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)
 jwt = JWTManager(app)
+app.wsgi_app = MaxContentLength(app.wsgi_app, max_length=3 * 1024 * 1024)
 
 # @app.after_request
 # def after_request(response):
