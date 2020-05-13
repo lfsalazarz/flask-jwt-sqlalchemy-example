@@ -24,26 +24,15 @@ from resources.store import Store, StoreList
 
 # HTTP Status Codes
 from config.constants import UNAUTHORIZED, BAD_REQUEST
+from application_settings import MAX_CONTENT_LENGTH
 
 
-load_dotenv(".env")
-
-MAX_CONTENT_LENGTH = 3 * 1024 * 1024
+load_dotenv(".env", verbose=True)
 
 app = Flask(__name__)
 app.wsgi_app = MaxContentLength(app.wsgi_app, max_length=MAX_CONTENT_LENGTH)
-app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_LENGTH
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
-    "DATABASE_URL", "sqlite:///data.db"
-)
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["PROPAGATE_EXCEPTIONS"] = True
-# https://flask-jwt-extended.readthedocs.io/en/latest/options.html
 app.secret_key = os.environ.get("APP_SECRET_KEY")
-# https://pyjwt.readthedocs.io/en/latest/algorithms.html
-app.config["JWT_ALGORITHM"] = "RS256"
-app.config["JWT_PUBLIC_KEY"] = open("./certs/pubkey.pem").read()
-app.config["JWT_PRIVATE_KEY"] = open("./certs/localhost.key").read()
+app.config.from_object("application_settings")
 api = Api(app)
 # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)

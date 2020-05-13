@@ -11,3 +11,4 @@ Scripts
 include
 pyvenv.cfg
 bin/
+data.db
