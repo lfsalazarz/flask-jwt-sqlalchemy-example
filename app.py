@@ -28,8 +28,11 @@ from config.constants import UNAUTHORIZED, BAD_REQUEST
 
 load_dotenv(".env")
 
+MAX_CONTENT_LENGTH = 3 * 1024 * 1024
+
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 3 * 1024 * 1024
+app.wsgi_app = MaxContentLength(app.wsgi_app, max_length=MAX_CONTENT_LENGTH)
+app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_LENGTH
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
     "DATABASE_URL", "sqlite:///data.db"
 )
@@ -45,7 +48,6 @@ api = Api(app)
 # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)
 jwt = JWTManager(app)
-app.wsgi_app = MaxContentLength(app.wsgi_app, max_length=3 * 1024 * 1024)
 
 # @app.after_request
 # def after_request(response):
