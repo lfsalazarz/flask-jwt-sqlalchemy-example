@@ -24,15 +24,15 @@ from resources.store import Store, StoreList
 
 # HTTP Status Codes
 from config.constants import UNAUTHORIZED, BAD_REQUEST
-from application_settings import MAX_CONTENT_LENGTH
+from default_settings import MAX_CONTENT_LENGTH
 
 
 load_dotenv(".env", verbose=True)
 
 app = Flask(__name__)
 app.wsgi_app = MaxContentLength(app.wsgi_app, max_length=MAX_CONTENT_LENGTH)
-app.secret_key = os.environ.get("APP_SECRET_KEY")
-app.config.from_object("application_settings")
+app.config.from_object("default_settings")
+# app.config.from_envvar("APPLICATION_SETTINGS")
 api = Api(app)
 # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)
